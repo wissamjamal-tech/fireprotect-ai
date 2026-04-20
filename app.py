@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
+import cv2
 
 st.title("🔥 FIREX AI System")
 st.write("Smart Firefighting Design Assistant")
@@ -15,21 +16,31 @@ system_type = st.selectbox("Select System Type", ["Sprinkler System"])
 
 if st.button("🚀 Generate Design"):
     if uploaded_file:
+
         st.success("Analyzing drawing...")
 
-        # 🔥 Simple AI Logic
-        img_array = np.array(image)
-        height, width, _ = img_array.shape
+        # 🔥 Convert image to OpenCV format
+        img = np.array(image)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        area_estimate = (width * height) / 5000  # fake scale
+        # Detect edges (walls)
+        edges = cv2.Canny(gray, 50, 150)
 
-        sprinklers = int(area_estimate / 9)  # NFPA approx (3x3 spacing)
+        # Count contours (rooms approximation)
+        contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        room_count = len(contours)
+
+        # Estimate sprinklers per room
+        sprinklers = room_count * 2
 
         st.subheader("📊 Results")
 
-        st.write(f"Estimated Area: {int(area_estimate)} sqm")
+        st.write(f"Detected Rooms (approx): {room_count}")
         st.write(f"Estimated Sprinklers: {sprinklers}")
-        st.write("NFPA spacing applied: ~3m x 3m")
+        st.write("Logic: 2 sprinklers per detected area")
+
+        st.image(edges, caption="Detected Layout", use_column_width=True)
 
         st.success("BOQ generated successfully ✅")
 
