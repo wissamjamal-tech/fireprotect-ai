@@ -1,31 +1,27 @@
 import streamlit as st
-st.set_page_config(page_title="FIREX AI", layout="centered")
+from PIL import Image
 
 st.title("🔥 FIREX AI System")
 st.write("Smart Firefighting Design Assistant")
 
-file = st.file_uploader("Upload Drawing", type=["pdf", "png", "jpg"])
+uploaded_file = st.file_uploader("Upload Drawing", type=["png", "jpg", "jpeg", "pdf"])
 
-system = st.selectbox(
-    "Select System Type",
-    ["Sprinkler System", "Fire Alarm System", "Both"]
-)
+if uploaded_file:
+    st.image(uploaded_file, caption="Uploaded Drawing", use_column_width=True)
+
+system_type = st.selectbox("Select System Type", ["Sprinkler System"])
 
 if st.button("🚀 Generate Design"):
-
-    if file is None:
-        st.warning("Please upload a drawing first")
-    else:
+    if uploaded_file:
         st.success("Processing...")
 
+        # Fake logic (next step we upgrade it)
         st.subheader("📊 Results")
 
-        if system == "Sprinkler System":
-            st.write("Estimated Sprinklers: 45")
-        elif system == "Fire Alarm System":
-            st.write("Estimated Detectors: 30")
-        else:
-            st.write("Sprinklers: 45")
-            st.write("Detectors: 30")
+        st.write("Estimated Sprinklers: 45")
+        st.write("Coverage area: Approx. 180 sqm")
+        st.write("NFPA spacing applied: 3m x 3m")
 
-        st.write("BOQ generated successfully ✅")
+        st.success("BOQ generated successfully ✅")
+    else:
+        st.error("Please upload a drawing first")
