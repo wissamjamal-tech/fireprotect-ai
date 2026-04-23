@@ -1,0 +1,40 @@
+{
+  "standard": "NFPA 13 inspired engineering ruleset (implementation approximation)",
+  "scope": "Residential only",
+  "hose_cabinet": {
+    "max_distance_to_stair_m": 3.0,
+    "default_count_per_stair": 1
+  },
+  "geometry": {
+    "min_wall_length_m": 0.8,
+    "door_min_width_m": 0.65,
+    "door_max_width_m": 1.4
+  },
+  "sprinkler": {
+    "max_coverage_area_m2": 12.1,
+    "spacing_m": 3.7,
+    "wall_clearance_m": 0.1,
+    "max_wall_distance_m": 2.3,
+    "coverage_overlap_factor": 0.9,
+    "exclude_room_types": ["balcony", "shaft"]
+  },
+  "hydraulics": {
+    "density_lpm_m2": 4.1,
+    "min_pressure_bar": 1.0,
+    "min_residual_pressure_bar": 0.5,
+    "min_sprinkler_flow_lpm": 57.0,
+    "default_branch_length_m": 8.0,
+    "safety_factor": 1.15
+  },
+  "room_classification": {
+    "keywords": {
+      "bedroom": ["bed", "bedroom", "br"],
+      "kitchen": ["kitchen", "kt", "pantry"],
+      "living": ["living", "hall", "drawing"],
+      "bathroom": ["bath", "toilet", "wc", "washroom"],
+      "stair": ["stair", "staircase", "stairs"],
+      "corridor": ["corridor", "passage", "lobby"],
+      "riser": ["riser", "wet riser"]
+    }
+  }
+}
